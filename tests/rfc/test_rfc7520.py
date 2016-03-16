@@ -840,10 +840,7 @@ class TestFourOne:
 
     def test_signature(self):
 
-        key = RSAKey(RSAKey.SHA256)
-
-        prepared_key = key.prepare_key(self.public_jwk)
-        payload = verify(self.token, prepared_key, 'RS256')
+        payload = verify(self.token, self.public_jwk, 'RS256')
 
         assert payload == expected_payload
 

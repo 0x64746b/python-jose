@@ -88,7 +88,7 @@ class Key(object):
     prepared_key = None
     hash_alg = None
 
-    def process_jwk(self, jwk_dict):
+    def _process_jwk(self, jwk_dict):
         raise NotImplementedError()
 
     def sign(self, msg):
@@ -169,7 +169,7 @@ class RSAKey(Key):
             return
 
         if isinstance(key, dict):
-            self.prepared_key = self.process_jwk(key)
+            self.prepared_key = self._process_jwk(key)
             return
 
         if isinstance(key, six.string_types):
@@ -185,7 +185,7 @@ class RSAKey(Key):
 
         raise JWKError('Unable to parse an RSA_JWK from key: %s' % key)
 
-    def process_jwk(self, jwk_dict):
+    def _process_jwk(self, jwk_dict):
         if not jwk_dict.get('kty') == 'RSA':
             raise JWKError("Incorrect key type.  Expected: 'RSA', Recieved: %s" % jwk_dict.get('kty'))
 
